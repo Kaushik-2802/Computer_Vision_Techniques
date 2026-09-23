@@ -1,147 +1,165 @@
-﻿# Computer_Vision_Techniques
-
- Initially install the following package:
- - pip install opencv-contrib-python
-
-Common keys:
- cv.waitKey() - used to run the application untill a key is pressed
-
-**File Name- read.py**:
-This file consits of basic methods to read an image as well as a video
-
-**Reading an image**:
-we use cv.imread() method to read image files.
-
-Syntax: cv.imread(img_path)
-
-we use cv.imshow() to display image in a window
-
-Syntax: cv.imshow(window_name,read_image)
-
-Output:
-
+# Computer Vision Techniques
+ 
+A hands-on collection of OpenCV fundamentals — reading media, drawing shapes, core image-processing operations, and geometric transformations — each demonstrated in its own script with visual output.
+ 
+![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-Contrib-green?logo=opencv&logoColor=white)
+![Status](https://img.shields.io/badge/status-learning%20log-orange)
+ 
+---
+ 
+## Setup
+ 
+```bash
+pip install opencv-contrib-python
+```
+ 
+**Useful key:**
+ 
+| Function | Purpose |
+|---|---|
+| `cv.waitKey()` | Keeps the display window open until a key is pressed |
+ 
+---
+ 
+## Table of Contents
+ 
+1. [Reading Media — `read.py`](#-reading-media--readpy)
+2. [Drawing Shapes — `draw.py`](#-drawing-shapes--drawpy)
+3. [Basic Operations — `basic.py`](#-basic-operations--basicpy)
+4. [Geometric Transformations — `transformations.py`](#-geometric-transformations--transformationspy)
+---
+ 
+## Reading Media — `read.py`
+ 
+Basic methods to read images and video streams.
+ 
+### Reading an image
+```python
+cv.imread(img_path)        # load the image
+cv.imshow(window_name, img) # display it in a window
+```
+ 
+**Output:**
+ 
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/7352af8b-572a-4e03-ac03-b0c65aef4e0c" />
-
-**Reading a video**:
-we use cv.videoCapture() method to read a video it takes an integer parameter
- 0->for your device webcam
-
- here we use a while loop to verify the camera is accessible and we capture the video frame by frame.
-
- **File Name- draw.py**:
-
- In this file I drew a simple shapes using the following methods:
- - cv.rectangle()-
-     used to draw rectangle shape
-     Syntax: cv.rectangle(img,starting_pt,ending_pt,color,thickness)
-             thickness - cv.FILLED- for filling the object or also we can pass thickness as -1 for same result
-   
-- cv.circle()-
-  Used to draw circle shape
-  Syntax: cv.circle(img,starting_pt,ending_pt,color,thickness)
-  
-- cv.line()-
-  Used to draw line
-  Syntax: cv.line(img,starting_pt,ending_pt,color,thickness)
-
-Output:
-
+### Reading a video
+```python
+cv.VideoCapture(0)   # 0 = default webcam
+```
+A `while` loop confirms the camera is accessible and reads the feed frame by frame.
+ 
+---
+ 
+## Drawing Shapes — `draw.py`
+ 
+Simple shape-drawing primitives:
+ 
+| Function | Description | Syntax |
+|---|---|---|
+| `cv.rectangle()` | Draws a rectangle | `cv.rectangle(img, start_pt, end_pt, color, thickness)` |
+| `cv.circle()` | Draws a circle | `cv.circle(img, center, radius, color, thickness)` |
+| `cv.line()` | Draws a line | `cv.line(img, start_pt, end_pt, color, thickness)` |
+ 
+> Pass `cv.FILLED` (or `-1`) as thickness to fill the shape.
+ 
+**Output:**
+ 
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/9df8bbfa-22e4-4592-9b69-f65b623b0eed" />
-
-**File Name- basic.py**:
-In this file, all the following basic functions are implemented:
-
-The original image is as follows:
-
+---
+ 
+## Basic Operations — `basic.py`
+ 
+**Original image:**
+ 
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/b3da69eb-6089-43f8-9b94-8bae992431f0" />
 
+### 1. Grayscale conversion
+```python
+cv.cvtColor(source_image, cv.COLOR_BGR2GRAY)
+```
 
-- convert to grayscale:
-  We use the cv.cvtColor() method to convert the image. To convert RGB image to Gray scale we use:
-    Syntax: cv.cvtColor(source_image,cv.COLOR_BGR2GRAY)
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/264e9220-3938-487d-ab86-294bcc059417" />
 
-  Output:
+### 2. Blurring
 
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/264e9220-3938-487d-ab86-294bcc059417" />
+Applies a Gaussian filter to reduce noise.
+```python
+cv.GaussianBlur(img, kernel_size, border_setting)
+```
+- `kernel_size` — filter dimensions, e.g. `(3, 3)`
+- `border_setting` — typically `cv.BORDER_DEFAULT`
 
-- Blur an image:
-  We use the cv.GaussianBlur() wherin we use Gaussian filter to reduce the noise in the image.
-     Syntax: cv.GaussianBlur(img,kernel_size,Border_setting)
-            kernel_size- used for setting the filter size eg: 3 x 3
-            Border_size- cv.BORDER_DEFAULT
-  Output:
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/0aeb954e-24eb-474e-b374-56ee64eb0e1f" />
 
-   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/0aeb954e-24eb-474e-b374-56ee64eb0e1f" />
+### 3. Edge detection (Canny)
+```python
+cv.Canny(img, threshold1, threshold2)
+```
+Outlines edges in the image. Feeding in a **blurred** image improves detection quality.
+ 
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/454d38ec-42fc-4d76-9bb5-0ac98986b2a5" />
 
-- Edge casket (Detection of edges):
-  Here we use Canny edge detector.
-  Syntax: cv.Canny(img,threshold1,threshold2)
+### 4. Dilation
+Thickens detected edges for better visibility.
+```python
+cv.dilate(canny_img, kernel_size, iterations=1)
+```
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/28fed016-93f7-4b0d-a404-5d9e8d78052b" />
 
-  It outlines all the available edges in the image. We pass blur images for better edge detection.
+### 5. Erosion
+Shrinks the dilated edges back down — sometimes recovering something close to the original edge-detected image.
+```python
+cv.erode(image, kernel_size, iterations=1)
+```
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42c40274-3b2c-4e43-b2d0-1ae7200b308d" />
 
-  Output:
+ 
+## Geometric Transformations — `transformations.py`
+ 
+### Translation
+Shifts the image along the x and/or y axis.
+ 
+```python
+transMat = np.float32([[1, 0, x], [0, 1, y]])   # x, y = shift amount
+cv.warpAffine(img, transMat, dimensions)
+```
+*Example: shifted `x = 100`, `y = 100`.*
+ 
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/e25af4ba-7034-4cf4-a4ba-afd81399bae1" />
 
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/454d38ec-42fc-4d76-9bb5-0ac98986b2a5" />
+### Rotation
+Rotates the image about a chosen point.
+ 
+```python
+rotMatrix = cv.getRotationMatrix2D(rotation_point, angle, scale)
+cv.warpAffine(img, rotMatrix, dimensions)
+```
+*Example: rotated by `90°`.*
+ 
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/abb24b01-189a-4f7f-ba02-7ff64c795945" />
 
-- Image Dilation:
-  Here we dilate the image for better edge detection.
-  Syntax: cv.dilate(canny_img,kernel_size,iterations=1)
-  Here we pass in the edge casket image to better outline the edges
-
-  Output:
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/28fed016-93f7-4b0d-a404-5d9e8d78052b" />
-
-- Erroding the images:
-  Here we errode the dilated images to get back the edge detection image.
-  Syntax: cv.erode(image,kernel_size,iterations=1)
-  Here sometimes it is possible to revert an dilated image back to edge detction image
-
-  Output:
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42c40274-3b2c-4e43-b2d0-1ae7200b308d" />
-
-**File Name- transformations.py**:
-
-- Translations:
-  Translation involves moving the image along x or y-axis as well
-
-  here we need to define a translation matrix. We do it as follows:
-  Syntax:
-     transMat= np.float32([[1,0,x],[0,1,y]]) where x,y are the new positions where the image will move
-     In the end we use cv.warpAffine(img,transMat,dimensions) to translate the final image
-
-  here i am moving the image in x-direction:100 , y-direction:100
-  Output:
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/e25af4ba-7034-4cf4-a4ba-afd81399bae1" />
-
-- Rotation:
-  We can also rotate an image by our required angle.We do it as follows:
-  Syntax:
-      we need to define a rotational matrix for that do:
-         cv.getRotationMatrix2D(rotation_point,angle,scale)
-         here:
-           rotation_point: the point from which the image is rotated
-      In the end we use cv.warpAffine(img,rotMatrix,dimensions) to rotate the image
-
-  In the file we rotated the image in 90 degrees
-  Output:
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/abb24b01-189a-4f7f-ba02-7ff64c795945" />\
-
-- Flipping an image:
-  We can also flip the image. For doing that, we use the following:
-  Syntax:
-    cv.flip(image,code)
-    here the code has the following 3 values:
-    - 0-> vertical
-    - 1-> horizontal
-    - -1-> Both ways flipping
-  Output:
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/f25a72f5-4685-464b-8b1b-1ad962ce3144" />
-
-  
-
-  
+### Flipping
+Mirrors the image horizontally, vertically, or both.
+ 
+```python
+cv.flip(image, code)
+```
+ 
+| Code | Effect |
+|---|---|
+| `0` | Vertical flip |
+| `1` | Horizontal flip |
+| `-1` | Both (horizontal + vertical) |
+ 
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/f25a72f5-4685-464b-8b1b-1ad962ce3144" />
+ 
+## 🗂️ Repo Structure
+ 
+```
+.
+├── read.py             # Image & video I/O
+├── draw.py             # Shape drawing (rectangle, circle, line)
+├── basic.py            # Grayscale, blur, Canny edges, dilation, erosion
+└── transformations.py  # Translation, rotation, flipping
+```
