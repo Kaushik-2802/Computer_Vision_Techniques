@@ -245,62 +245,87 @@ Produces a clearer, color-accurate channel view by recombining specific intensit
 </p>
 ---
 
-## Blurring an image
-There are different methods to blur an image they are as follows:
+## 🌫️ Blurring Techniques
+ 
+Beyond the basic Gaussian blur, OpenCV offers several blurring methods, each trading off smoothness, edge preservation, and speed differently.
+ 
+### 1. Average Blur
+Replaces each pixel with the **average** of its surrounding pixels.
+ 
+```python
+cv.blur(img, kernel_size)
+```
+> A larger `kernel_size` produces a stronger blur.
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Average blur output" src="https://github.com/user-attachments/assets/b1283020-67ad-4897-a4df-7f942e744e25" />
+</p>
 
-- **Average Blur**:
-  In this the blur is applied to the middle pixel by considering the average of the sorrounding pixels value. We use cv.blur() method.
-  Syntax:
-   cv.blur(img,kernel_size) here,
-   - higher the kernel size higher is the blur.
+### 2. Gaussian Blur
+Assigns **weights** to surrounding pixels and blurs based on their weighted average — smoother and generally better than the average blur.
+ 
+```python
+cv.GaussianBlur(img, kernel_size, sigmaX)
+```
+- `sigmaX` — standard deviation of a pixel from its surrounding pixels
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Gaussian blur output" src="https://github.com/user-attachments/assets/74720d27-d2f4-4f72-bd86-c59c11d3149f" />
+</p>
 
-  **Output for Average Blur**:
+### 3. Median Blur
+Uses the **median** of surrounding pixels instead of the average or a weighted average — better at removing noise while preserving detail than the two methods above.
+ 
+```python
+cv.medianBlur(img, kernel_size)
+```
+> Note: `kernel_size` here is a plain **integer**, not a tuple.
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Median blur output" src="https://github.com/user-attachments/assets/97622625-f1d7-4f30-b2ff-cb35d0d11833" />
+</p>
 
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/b1283020-67ad-4897-a4df-7f942e744e25" />
-
-- **Gaussian Blur**:
-  In this blurring technique, the sorrounding pixels are given certian weights and the blur is applied to the average of these weights pixel. It is better than the average    blur and cv.GaussianBlur() method is used.
-  Syntax:
-    cv.GaussianBlur(img,kernel_size,SigmaX)
-    here, sigmaX is the standard deviation of that pixel from it's sorrounding pixels.
-  
-  **Output for Gaussian blur**:
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/74720d27-d2f4-4f72-bd86-c59c11d3149f" />
-
-- **Median Blur**:
-  In this blurring technique, the median of all the sorrounding points is considered instead of average. It is better than above two and we use cv.medianBlur() method.
-  Syntax:
-    cv.medianBlur(img,kernel_size)
-    here, kernel_size is given as an integer instead of a tuple.
-
-  **Output for median blur:**
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/97622625-f1d7-4f30-b2ff-cb35d0d11833" />
-
-- **Bilateral Blur**:
-  In this blurring technique, it retains the edges in an image even after blurring. cv.bilateralfilter() method is used for blurring in this technique.
-  Syntax:
-    cv.bilateralFilter(img,diameter,Sigma_Color,Sigma_Space)
-
-  **Output for Bilateral filter**:
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42e45416-2ece-4975-89e5-5b55a1b0feb6" />
-
-**Bitwise Operations**:
- We can also perform bitwise operations on images.
-
-- **Bitwise AND**:
-  we use cv.bitwise_and() method to perform bitwise and operation on images.
-  Syntax:
-    cv.bitwise_and(img1,img2)
-    similarly we can use bitwise_or, bitwise_not, bitwise_xor for OR,NOT and XOR operations respectively.
-
-  **Output for bitwise AND:**
-
-  Here we used a rectangle and circle images and performed bitwise and operation.
-
-  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/6aa0e27a-bb53-4764-a8f2-53dc43f3b8e6" />
+### 4. Bilateral Filter
+Blurs the image while **preserving edges** — the most visually refined of the four methods.
+ 
+```python
+cv.bilateralFilter(img, diameter, sigmaColor, sigmaSpace)
+```
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Bilateral filter output" src="https://github.com/user-attachments/assets/42e45416-2ece-4975-89e5-5b55a1b0feb6" />
+</p>
+---
+ 
+## 🔀 Bitwise Operations
+ 
+OpenCV also supports pixel-wise **bitwise operations** between images.
+ 
+```python
+cv.bitwise_and(img1, img2)
+```
+ 
+| Function | Operation |
+|---|---|
+| `cv.bitwise_and()` | AND |
+| `cv.bitwise_or()` | OR |
+| `cv.bitwise_not()` | NOT |
+| `cv.bitwise_xor()` | XOR |
+ 
+**Output — Bitwise AND:**
+ 
+*A rectangle and a circle image combined using a bitwise AND operation.*
+ 
+<p align="center">
+  <img width="500" height="500" alt="Bitwise AND output" src="https://github.com/user-attachments/assets/6aa0e27a-bb53-4764-a8f2-53dc43f3b8e6" />
+</p>
 
 
   
