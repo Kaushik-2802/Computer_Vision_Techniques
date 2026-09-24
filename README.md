@@ -28,6 +28,9 @@ pip install opencv-contrib-python
 2. [Drawing Shapes — `draw.py`](#-drawing-shapes--drawpy)
 3. [Basic Operations — `basic.py`](#-basic-operations--basicpy)
 4. [Geometric Transformations — `transformations.py`](#-geometric-transformations--transformationspy)
+5. [Contour Detection](#-contour-detection)
+6. [Color Spaces](#-color-spaces)
+7. [Color Channels](#-color-channels)
 ---
  
 ## Reading Media — `read.py`
@@ -43,6 +46,7 @@ cv.imshow(window_name, img) # display it in a window
 **Output:**
  
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/7352af8b-572a-4e03-ac03-b0c65aef4e0c" />
+
 ### Reading a video
 ```python
 cv.VideoCapture(0)   # 0 = default webcam
@@ -66,6 +70,7 @@ Simple shape-drawing primitives:
 **Output:**
  
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/9df8bbfa-22e4-4592-9b69-f65b623b0eed" />
+
 ---
  
 ## Basic Operations — `basic.py`
@@ -153,6 +158,92 @@ cv.flip(image, code)
 | `-1` | Both (horizontal + vertical) |
  
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/f25a72f5-4685-464b-8b1b-1ad962ce3144" />
+
+## Contour Detection
+ 
+Contours are the **boundaries of an object** in an image.
+ 
+```python
+contours, hierarchies = cv.findContours(canny_img, contour_detection, contour_approximation_method)
+```
+ 
+**Parameters:**
+ 
+| Parameter | Options | Description |
+|---|---|---|
+| `contour_detection` | `cv.RETR_TREE` | Returns hierarchical contours in the image |
+| | `cv.RETR_EXTERNAL` | Returns only the external boundaries of image objects |
+| | `cv.RETR_LIST` | Lists all contours present in the image |
+| `contour_approximation_method` | `cv.CHAIN_APPROX_NONE` | Default approximation method (no compression) |
+| | `cv.CHAIN_APPROX_SIMPLE` | Simplified/compressed approximation method |
+ 
+> Instead of a Canny edge image, a **thresholded** image can also be used as the contour-detection input:
+> ```python
+> cv.threshold(image, threshold1, maxVal, type)
+> ```
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Contour detection output" src="https://github.com/user-attachments/assets/ed4cb8c1-430b-47aa-9c08-87071d18a577" />
+</p>
+---
+ 
+## Color Spaces
+ 
+Images can be converted from one color scale to another using `cv.cvtColor()`.
+ 
+```python
+cv.cvtColor(src_img, code)
+```
+ 
+**Common conversion codes:**
+ 
+| Code | Converts to |
+|---|---|
+| `cv.COLOR_BGR2GRAY` | Grayscale |
+| `cv.COLOR_BGR2HSV` | HSV (Hue, Saturation, Value) |
+| `cv.COLOR_BGR2LAB` | LAB color space |
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Color spaces output" src="https://github.com/user-attachments/assets/994ec1d6-a082-4ad3-ae47-b00f360cdf9e" />
+</p>
+---
+ 
+## Color Channels
+ 
+Just like color spaces, individual color channels can be **split** or **merged**.
+ 
+### Splitting channels
+```python
+b, g, r = cv.split(img)
+```
+Splits the image into its Blue, Green, and Red channels, each highlighting the intensity of that color across the image.
+ 
+**Output:**
+ 
+*A blue-channel image — lighter regions represent less blue, darker regions represent more blue.*
+ 
+<p align="center">
+  <img width="500" height="500" alt="Blue channel split output" src="https://github.com/user-attachments/assets/9560993a-5254-4ff3-a390-51ba5903b050" />
+</p>
+
+### Merging channels
+```python
+cv.merge([value1, value2, value3])
+```
+Produces a clearer, color-accurate channel view by recombining specific intensity values.
+ 
+**Output:**
+ 
+*The blue channel, reconstructed using `cv.merge()` to clearly isolate blue intensity.*
+ 
+<p align="center">
+  <img width="500" height="500" alt="Blue channel merge output" src="https://github.com/user-attachments/assets/17538227-9e0d-410e-983f-067ed34fa86e" />
+</p>
+---
  
 ## 🗂️ Repo Structure
  
@@ -161,5 +252,7 @@ cv.flip(image, code)
 ├── read.py             # Image & video I/O
 ├── draw.py             # Shape drawing (rectangle, circle, line)
 ├── basic.py            # Grayscale, blur, Canny edges, dilation, erosion
-└── transformations.py  # Translation, rotation, flipping
+├── transformations.py  # Translation, rotation, flipping
+├── contours.py         # Contour detection
+└── color.py            # Color spaces & channel splitting/merging
 ```
