@@ -244,6 +244,51 @@ Produces a clearer, color-accurate channel view by recombining specific intensit
   <img width="500" height="500" alt="Blue channel merge output" src="https://github.com/user-attachments/assets/17538227-9e0d-410e-983f-067ed34fa86e" />
 </p>
 ---
+
+## Blurring an image
+There are different methods to blur an image they are as follows:
+
+- **Average Blur**:
+  In this the blur is applied to the middle pixel by considering the average of the sorrounding pixels value. We use cv.blur() method.
+  Syntax:
+   cv.blur(img,kernel_size) here,
+   - higher the kernel size higher is the blur.
+
+  **Output for Average Blur**:
+
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/b1283020-67ad-4897-a4df-7f942e744e25" />
+
+- **Gaussian Blur**:
+  In this blurring technique, the sorrounding pixels are given certian weights and the blur is applied to the average of these weights pixel. It is better than the average    blur and cv.GaussianBlur() method is used.
+  Syntax:
+    cv.GaussianBlur(img,kernel_size,SigmaX)
+    here, sigmaX is the standard deviation of that pixel from it's sorrounding pixels.
+  
+  **Output for Gaussian blur**:
+
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/74720d27-d2f4-4f72-bd86-c59c11d3149f" />
+
+- **Median Blur**:
+  In this blurring technique, the median of all the sorrounding points is considered instead of average. It is better than above two and we use cv.medianBlur() method.
+  Syntax:
+    cv.medianBlur(img,kernel_size)
+    here, kernel_size is given as an integer instead of a tuple.
+
+  **Output for median blur:**
+
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/97622625-f1d7-4f30-b2ff-cb35d0d11833" />
+
+- **Bilateral Blur**:
+  In this blurring technique, it retains the edges in an image even after blurring. cv.bilateralfilter() method is used for blurring in this technique.
+  Syntax:
+    cv.bilateralFilter(img,diameter,Sigma_Color,Sigma_Space)
+
+  **Output for Bilateral filter**:
+
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42e45416-2ece-4975-89e5-5b55a1b0feb6" />
+
+  
+
  
 ## 🗂️ Repo Structure
  
