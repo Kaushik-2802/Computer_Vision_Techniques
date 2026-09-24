@@ -287,6 +287,22 @@ There are different methods to blur an image they are as follows:
 
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42e45416-2ece-4975-89e5-5b55a1b0feb6" />
 
+**Bitwise Operations**:
+ We can also perform bitwise operations on images.
+
+- **Bitwise AND**:
+  we use cv.bitwise_and() method to perform bitwise and operation on images.
+  Syntax:
+    cv.bitwise_and(img1,img2)
+    similarly we can use bitwise_or, bitwise_not, bitwise_xor for OR,NOT and XOR operations respectively.
+
+  **Output for bitwise AND:**
+
+  Here we used a rectangle and circle images and performed bitwise and operation.
+
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/6aa0e27a-bb53-4764-a8f2-53dc43f3b8e6" />
+
+
   
 
  
