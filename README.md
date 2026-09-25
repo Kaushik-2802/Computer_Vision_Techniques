@@ -52,6 +52,7 @@ cv.imshow(window_name, img) # display it in a window
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/7352af8b-572a-4e03-ac03-b0c65aef4e0c" />
 </p>
+
 ### Reading a video
 ```python
 cv.VideoCapture(0)   # 0 = default webcam
@@ -77,6 +78,7 @@ Simple shape-drawing primitives:
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/9df8bbfa-22e4-4592-9b69-f65b623b0eed" />
 </p>
+
 ---
  
 ## Basic Operations — `basic.py`
@@ -86,6 +88,7 @@ Simple shape-drawing primitives:
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/b3da69eb-6089-43f8-9b94-8bae992431f0" />
 </p>
+
 ### 1. Grayscale conversion
 ```python
 cv.cvtColor(source_image, cv.COLOR_BGR2GRAY)
@@ -96,6 +99,7 @@ cv.cvtColor(source_image, cv.COLOR_BGR2GRAY)
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/264e9220-3938-487d-ab86-294bcc059417" />
 </p>
+
 ### 2. Blurring
 Applies a Gaussian filter to reduce noise.
 ```python
@@ -108,6 +112,7 @@ cv.GaussianBlur(img, kernel_size, border_setting)
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/0aeb954e-24eb-474e-b374-56ee64eb0e1f" />
 </p>
+
 ### 3. Edge detection (Canny)
 ```python
 cv.Canny(img, threshold1, threshold2)
@@ -119,6 +124,7 @@ Outlines edges in the image. Feeding in a **blurred** image improves detection q
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/454d38ec-42fc-4d76-9bb5-0ac98986b2a5" />
 </p>
+
 ### 4. Dilation
 Thickens detected edges for better visibility.
 ```python
@@ -130,6 +136,7 @@ cv.dilate(canny_img, kernel_size, iterations=1)
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/28fed016-93f7-4b0d-a404-5d9e8d78052b" />
 </p>
+
 ### 5. Erosion
 Shrinks the dilated edges back down — sometimes recovering something close to the original edge-detected image.
 ```python
@@ -141,6 +148,7 @@ cv.erode(image, kernel_size, iterations=1)
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42c40274-3b2c-4e43-b2d0-1ae7200b308d" />
 </p>
+
 ---
  
 ## Geometric Transformations — `transformations.py`
@@ -159,6 +167,7 @@ cv.warpAffine(img, transMat, dimensions)
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/e25af4ba-7034-4cf4-a4ba-afd81399bae1" />
 </p>
+
 ### Rotation
 Rotates the image about a chosen point.
  
@@ -173,6 +182,7 @@ cv.warpAffine(img, rotMatrix, dimensions)
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/abb24b01-189a-4f7f-ba02-7ff64c795945" />
 </p>
+
 ### Flipping
 Mirrors the image horizontally, vertically, or both.
  
@@ -191,6 +201,7 @@ cv.flip(image, code)
 <p align="center">
   <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/f25a72f5-4685-464b-8b1b-1ad962ce3144" />
 </p>
+
 ---
  
 ## 🧵 Contour Detection
@@ -221,6 +232,7 @@ contours, hierarchies = cv.findContours(canny_img, contour_detection, contour_ap
 <p align="center">
   <img width="500" height="500" alt="Contour detection output" src="https://github.com/user-attachments/assets/ed4cb8c1-430b-47aa-9c08-87071d18a577" />
 </p>
+
 ---
  
 ## Color Spaces
@@ -244,6 +256,7 @@ cv.cvtColor(src_img, code)
 <p align="center">
   <img width="500" height="500" alt="Color spaces output" src="https://github.com/user-attachments/assets/994ec1d6-a082-4ad3-ae47-b00f360cdf9e" />
 </p>
+
 ---
  
 ## Color Channels
@@ -263,6 +276,7 @@ Splits the image into its Blue, Green, and Red channels, each highlighting the i
 <p align="center">
   <img width="500" height="500" alt="Blue channel split output" src="https://github.com/user-attachments/assets/9560993a-5254-4ff3-a390-51ba5903b050" />
 </p>
+
 ### Merging channels
 ```python
 cv.merge([value1, value2, value3])
@@ -276,6 +290,7 @@ Produces a clearer, color-accurate channel view by recombining specific intensit
 <p align="center">
   <img width="500" height="500" alt="Blue channel merge output" src="https://github.com/user-attachments/assets/17538227-9e0d-410e-983f-067ed34fa86e" />
 </p>
+
 ---
  
 ## Blurring Techniques
@@ -295,6 +310,7 @@ cv.blur(img, kernel_size)
 <p align="center">
   <img width="500" height="500" alt="Average blur output" src="https://github.com/user-attachments/assets/b1283020-67ad-4897-a4df-7f942e744e25" />
 </p>
+
 ### 2. Gaussian Blur
 Assigns **weights** to surrounding pixels and blurs based on their weighted average — smoother and generally better than the average blur.
  
@@ -307,6 +323,7 @@ cv.GaussianBlur(img, kernel_size, sigmaX)
 <p align="center">
   <img width="500" height="500" alt="Gaussian blur output" src="https://github.com/user-attachments/assets/74720d27-d2f4-4f72-bd86-c59c11d3149f" />
 </p>
+
 ### 3. Median Blur
 Uses the **median** of surrounding pixels instead of the average or a weighted average — better at removing noise while preserving detail than the two methods above.
  
@@ -320,6 +337,7 @@ cv.medianBlur(img, kernel_size)
 <p align="center">
   <img width="500" height="500" alt="Median blur output" src="https://github.com/user-attachments/assets/97622625-f1d7-4f30-b2ff-cb35d0d11833" />
 </p>
+
 ### 4. Bilateral Filter
 Blurs the image while **preserving edges** — the most visually refined of the four methods.
  
@@ -332,6 +350,7 @@ cv.bilateralFilter(img, diameter, sigmaColor, sigmaSpace)
 <p align="center">
   <img width="500" height="500" alt="Bilateral filter output" src="https://github.com/user-attachments/assets/42e45416-2ece-4975-89e5-5b55a1b0feb6" />
 </p>
+
 ---
  
 ## Bitwise Operations
@@ -356,6 +375,7 @@ cv.bitwise_and(img1, img2)
 <p align="center">
   <img width="500" height="500" alt="Bitwise AND output" src="https://github.com/user-attachments/assets/6aa0e27a-bb53-4764-a8f2-53dc43f3b8e6" />
 </p>
+
 ---
  
 ## Masking
@@ -370,16 +390,19 @@ Masking isolates specific regions of an image by discarding everything outside a
 <p align="center">
   <img width="500" height="500" alt="Mask shape" src="https://github.com/user-attachments/assets/0f6b9ac9-7094-4135-9bc3-b93a0e61527a" />
 </p>
+
 **The source image:**
  
 <p align="center">
   <img width="500" height="500" alt="Source image for masking" src="https://github.com/user-attachments/assets/7aac2d37-b018-4c79-b4a8-f1fbfd402376" />
 </p>
+
 **Output — after masking:**
  
 <p align="center">
   <img width="500" height="500" alt="Masking output" src="https://github.com/user-attachments/assets/78868b3e-9241-4b39-858f-a3accdee9ea4" />
 </p>
+
 ---
  
 ## Histogram Computation
@@ -402,11 +425,13 @@ cv.calcHist(list_images, channels, mask, histSize, range)
 <p align="center">
   <img width="500" height="441" alt="Grayscale source image" src="https://github.com/user-attachments/assets/473a3ec7-2ea7-4ded-b007-134043ca19ac" />
 </p>
+
 **Output — pixel distribution across bins:**
  
 <p align="center">
   <img width="500" height="500" alt="Grayscale histogram output" src="https://github.com/user-attachments/assets/f25654e1-d46f-4052-b4d6-5db8dd8bec0b" />
 </p>
+
 ### Color histogram
  
 **Source image:**
@@ -414,11 +439,13 @@ cv.calcHist(list_images, channels, mask, histSize, range)
 <p align="center">
   <img width="500" height="441" alt="Color source image" src="https://github.com/user-attachments/assets/20176ab3-42a3-4d72-97d5-1175279e660e" />
 </p>
+
 **Output — distribution of red, green, and blue pixels:**
  
 <p align="center">
   <img width="500" height="500" alt="Color histogram output" src="https://github.com/user-attachments/assets/41a67677-657b-4489-a704-eb2826ce8acc" />
 </p>
+
 ---
  
 ## 🗂️ Repo Structure
