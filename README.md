@@ -1,6 +1,6 @@
-# Computer Vision Techniques
+# 👁️ Computer Vision Techniques
  
-A hands-on collection of OpenCV fundamentals — reading media, drawing shapes, core image-processing operations, and geometric transformations — each demonstrated in its own script with visual output.
+A hands-on collection of OpenCV fundamentals — reading media, drawing shapes, core image-processing operations, geometric transformations, contour detection, color-space manipulation, blurring, bitwise operations, masking, and histogram computation — each demonstrated in its own script with visual output.
  
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-Contrib-green?logo=opencv&logoColor=white)
@@ -22,7 +22,7 @@ pip install opencv-contrib-python
  
 ---
  
-## Table of Contents
+## 📑 Table of Contents
  
 1. [Reading Media — `read.py`](#-reading-media--readpy)
 2. [Drawing Shapes — `draw.py`](#-drawing-shapes--drawpy)
@@ -31,6 +31,10 @@ pip install opencv-contrib-python
 5. [Contour Detection](#-contour-detection)
 6. [Color Spaces](#-color-spaces)
 7. [Color Channels](#-color-channels)
+8. [Blurring Techniques](#-blurring-techniques)
+9. [Bitwise Operations](#-bitwise-operations)
+10. [Masking](#-masking)
+11. [Histogram Computation](#-histogram-computation)
 ---
  
 ## Reading Media — `read.py`
@@ -45,8 +49,9 @@ cv.imshow(window_name, img) # display it in a window
  
 **Output:**
  
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/7352af8b-572a-4e03-ac03-b0c65aef4e0c" />
-
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/7352af8b-572a-4e03-ac03-b0c65aef4e0c" />
+</p>
 ### Reading a video
 ```python
 cv.VideoCapture(0)   # 0 = default webcam
@@ -69,56 +74,74 @@ Simple shape-drawing primitives:
  
 **Output:**
  
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/9df8bbfa-22e4-4592-9b69-f65b623b0eed" />
-
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/9df8bbfa-22e4-4592-9b69-f65b623b0eed" />
+</p>
 ---
  
 ## Basic Operations — `basic.py`
  
 **Original image:**
  
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/b3da69eb-6089-43f8-9b94-8bae992431f0" />
-
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/b3da69eb-6089-43f8-9b94-8bae992431f0" />
+</p>
 ### 1. Grayscale conversion
 ```python
 cv.cvtColor(source_image, cv.COLOR_BGR2GRAY)
 ```
-
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/264e9220-3938-487d-ab86-294bcc059417" />
-
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/264e9220-3938-487d-ab86-294bcc059417" />
+</p>
 ### 2. Blurring
-
 Applies a Gaussian filter to reduce noise.
 ```python
 cv.GaussianBlur(img, kernel_size, border_setting)
 ```
 - `kernel_size` — filter dimensions, e.g. `(3, 3)`
 - `border_setting` — typically `cv.BORDER_DEFAULT`
-
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/0aeb954e-24eb-474e-b374-56ee64eb0e1f" />
-
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/0aeb954e-24eb-474e-b374-56ee64eb0e1f" />
+</p>
 ### 3. Edge detection (Canny)
 ```python
 cv.Canny(img, threshold1, threshold2)
 ```
 Outlines edges in the image. Feeding in a **blurred** image improves detection quality.
  
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/454d38ec-42fc-4d76-9bb5-0ac98986b2a5" />
-
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/454d38ec-42fc-4d76-9bb5-0ac98986b2a5" />
+</p>
 ### 4. Dilation
 Thickens detected edges for better visibility.
 ```python
 cv.dilate(canny_img, kernel_size, iterations=1)
 ```
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/28fed016-93f7-4b0d-a404-5d9e8d78052b" />
-
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/28fed016-93f7-4b0d-a404-5d9e8d78052b" />
+</p>
 ### 5. Erosion
 Shrinks the dilated edges back down — sometimes recovering something close to the original edge-detected image.
 ```python
 cv.erode(image, kernel_size, iterations=1)
 ```
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42c40274-3b2c-4e43-b2d0-1ae7200b308d" />
-
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/42c40274-3b2c-4e43-b2d0-1ae7200b308d" />
+</p>
+---
  
 ## Geometric Transformations — `transformations.py`
  
@@ -131,8 +154,11 @@ cv.warpAffine(img, transMat, dimensions)
 ```
 *Example: shifted `x = 100`, `y = 100`.*
  
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/e25af4ba-7034-4cf4-a4ba-afd81399bae1" />
-
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/e25af4ba-7034-4cf4-a4ba-afd81399bae1" />
+</p>
 ### Rotation
 Rotates the image about a chosen point.
  
@@ -142,8 +168,11 @@ cv.warpAffine(img, rotMatrix, dimensions)
 ```
 *Example: rotated by `90°`.*
  
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/abb24b01-189a-4f7f-ba02-7ff64c795945" />
-
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/abb24b01-189a-4f7f-ba02-7ff64c795945" />
+</p>
 ### Flipping
 Mirrors the image horizontally, vertically, or both.
  
@@ -157,9 +186,14 @@ cv.flip(image, code)
 | `1` | Horizontal flip |
 | `-1` | Both (horizontal + vertical) |
  
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/f25a72f5-4685-464b-8b1b-1ad962ce3144" />
-
-## Contour Detection
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/f25a72f5-4685-464b-8b1b-1ad962ce3144" />
+</p>
+---
+ 
+## 🧵 Contour Detection
  
 Contours are the **boundaries of an object** in an image.
  
@@ -229,7 +263,6 @@ Splits the image into its Blue, Green, and Red channels, each highlighting the i
 <p align="center">
   <img width="500" height="500" alt="Blue channel split output" src="https://github.com/user-attachments/assets/9560993a-5254-4ff3-a390-51ba5903b050" />
 </p>
-
 ### Merging channels
 ```python
 cv.merge([value1, value2, value3])
@@ -244,8 +277,8 @@ Produces a clearer, color-accurate channel view by recombining specific intensit
   <img width="500" height="500" alt="Blue channel merge output" src="https://github.com/user-attachments/assets/17538227-9e0d-410e-983f-067ed34fa86e" />
 </p>
 ---
-
-## 🌫️ Blurring Techniques
+ 
+## Blurring Techniques
  
 Beyond the basic Gaussian blur, OpenCV offers several blurring methods, each trading off smoothness, edge preservation, and speed differently.
  
@@ -262,7 +295,6 @@ cv.blur(img, kernel_size)
 <p align="center">
   <img width="500" height="500" alt="Average blur output" src="https://github.com/user-attachments/assets/b1283020-67ad-4897-a4df-7f942e744e25" />
 </p>
-
 ### 2. Gaussian Blur
 Assigns **weights** to surrounding pixels and blurs based on their weighted average — smoother and generally better than the average blur.
  
@@ -275,7 +307,6 @@ cv.GaussianBlur(img, kernel_size, sigmaX)
 <p align="center">
   <img width="500" height="500" alt="Gaussian blur output" src="https://github.com/user-attachments/assets/74720d27-d2f4-4f72-bd86-c59c11d3149f" />
 </p>
-
 ### 3. Median Blur
 Uses the **median** of surrounding pixels instead of the average or a weighted average — better at removing noise while preserving detail than the two methods above.
  
@@ -289,7 +320,6 @@ cv.medianBlur(img, kernel_size)
 <p align="center">
   <img width="500" height="500" alt="Median blur output" src="https://github.com/user-attachments/assets/97622625-f1d7-4f30-b2ff-cb35d0d11833" />
 </p>
-
 ### 4. Bilateral Filter
 Blurs the image while **preserving edges** — the most visually refined of the four methods.
  
@@ -304,7 +334,7 @@ cv.bilateralFilter(img, diameter, sigmaColor, sigmaSpace)
 </p>
 ---
  
-## 🔀 Bitwise Operations
+## Bitwise Operations
  
 OpenCV also supports pixel-wise **bitwise operations** between images.
  
@@ -326,10 +356,70 @@ cv.bitwise_and(img1, img2)
 <p align="center">
   <img width="500" height="500" alt="Bitwise AND output" src="https://github.com/user-attachments/assets/6aa0e27a-bb53-4764-a8f2-53dc43f3b8e6" />
 </p>
-
-
-  
-
+---
+ 
+## Masking
+ 
+Masking isolates specific regions of an image by discarding everything outside a defined shape.
+ 
+**Steps:**
+1. Define a shape — `cv.rectangle()`, `cv.circle()`, or a combination of shapes — on a blank canvas the same size as the image.
+2. Apply that shape onto the target image using **bitwise operations**, keeping only the pixels that fall inside it.
+**The mask shape used:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Mask shape" src="https://github.com/user-attachments/assets/0f6b9ac9-7094-4135-9bc3-b93a0e61527a" />
+</p>
+**The source image:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Source image for masking" src="https://github.com/user-attachments/assets/7aac2d37-b018-4c79-b4a8-f1fbfd402376" />
+</p>
+**Output — after masking:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Masking output" src="https://github.com/user-attachments/assets/78868b3e-9241-4b39-858f-a3accdee9ea4" />
+</p>
+---
+ 
+## Histogram Computation
+ 
+A histogram shows how pixel intensities are **distributed** across an image, computed with `cv.calcHist()`.
+ 
+```python
+cv.calcHist(list_images, channels, mask, histSize, range)
+```
+ 
+| Parameter | Description |
+|---|---|
+| `histSize` | Size of the histogram (number of bins) |
+| `range` | Range of pixel values covered by the histogram |
+ 
+### Grayscale histogram
+ 
+**Source image:**
+ 
+<p align="center">
+  <img width="500" height="441" alt="Grayscale source image" src="https://github.com/user-attachments/assets/473a3ec7-2ea7-4ded-b007-134043ca19ac" />
+</p>
+**Output — pixel distribution across bins:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Grayscale histogram output" src="https://github.com/user-attachments/assets/f25654e1-d46f-4052-b4d6-5db8dd8bec0b" />
+</p>
+### Color histogram
+ 
+**Source image:**
+ 
+<p align="center">
+  <img width="500" height="441" alt="Color source image" src="https://github.com/user-attachments/assets/20176ab3-42a3-4d72-97d5-1175279e660e" />
+</p>
+**Output — distribution of red, green, and blue pixels:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Color histogram output" src="https://github.com/user-attachments/assets/41a67677-657b-4489-a704-eb2826ce8acc" />
+</p>
+---
  
 ## 🗂️ Repo Structure
  
@@ -340,5 +430,9 @@ cv.bitwise_and(img1, img2)
 ├── basic.py            # Grayscale, blur, Canny edges, dilation, erosion
 ├── transformations.py  # Translation, rotation, flipping
 ├── contours.py         # Contour detection
-└── color.py            # Color spaces & channel splitting/merging
+├── color.py            # Color spaces & channel splitting/merging
+├── blurring.py         # Average, Gaussian, median & bilateral blurring
+├── bitwise.py          # Bitwise AND / OR / NOT / XOR operations
+├── masking.py           # Region-of-interest masking
+└── histogram.py         # Grayscale & color histogram computation
 ```
