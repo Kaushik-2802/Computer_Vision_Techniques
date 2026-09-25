@@ -1,6 +1,6 @@
 # Computer Vision Techniques
  
-A hands-on collection of OpenCV fundamentals — reading media, drawing shapes, core image-processing operations, geometric transformations, contour detection, color-space manipulation, blurring, bitwise operations, masking, and histogram computation — each demonstrated in its own script with visual output.
+A hands-on collection of OpenCV fundamentals — reading media, drawing shapes, core image-processing operations, geometric transformations, contour detection, color-space manipulation, blurring, bitwise operations, masking, histograms, thresholding, and gradient-based edge detection — each demonstrated in its own script with visual output.
  
 ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-Contrib-green?logo=opencv&logoColor=white)
@@ -35,6 +35,8 @@ pip install opencv-contrib-python
 9. [Bitwise Operations](#-bitwise-operations)
 10. [Masking](#-masking)
 11. [Histogram Computation](#-histogram-computation)
+12. [Thresholding](#-thresholding)
+13. [Gradients / Edge Detection](#-gradients--edge-detection)
 ---
  
 ## Reading Media — `read.py`
@@ -204,7 +206,7 @@ cv.flip(image, code)
 
 ---
  
-## 🧵 Contour Detection
+## Contour Detection
  
 Contours are the **boundaries of an object** in an image.
  
@@ -448,7 +450,168 @@ cv.calcHist(list_images, channels, mask, histSize, range)
 
 ---
  
-## 🗂️ Repo Structure
+## Thresholding
+ 
+Converts pixel values within a certain range into another value — most commonly used for binary image transformations. There are two main approaches:
+ 
+### 1. Simple Thresholding
+ 
+```python
+threshold, thresh = cv.threshold(src_img, thresh, maxVal, thresh_type)
+```
+ 
+| Parameter | Description |
+|---|---|
+| `maxVal` | The value assigned to pixels that cross the threshold |
+| `thresh_type` | The thresholding mode — `cv.THRESH_BINARY` for standard binary, `cv.THRESH_BINARY_INV` for inverse binary |
+ 
+**Output — binary threshold:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Binary threshold output" src="https://github.com/user-attachments/assets/3e276ea3-343e-4182-958f-3adc4c99d950" />
+</p>
+
+**Output — inverse binary threshold:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Inverse binary threshold output" src="https://github.com/user-attachments/assets/1df803dd-d7a3-4619-ab8a-34d2f2b95a92" />
+</p>
+
+### 2. Adaptive Thresholding
+ 
+Automatically computes the threshold value for an image instead of requiring a manual value.
+ 
+```python
+cv.adaptiveThreshold(src_img, maxVal, adaptiveMethod, thresh_type, k_size, C)
+```
+ 
+| Parameter | Description |
+|---|---|
+| `adaptiveMethod` | `cv.ADAPTIVE_THRESH_MEAN_C` or `cv.ADAPTIVE_THRESH_GAUSSIAN_C` |
+| `k_size` | Kernel size used to calculate the local mean/Gaussian mean |
+| `C` | A fine-tuning constant subtracted from the computed mean |
+ 
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Adaptive threshold output" src="https://github.com/user-attachments/assets/cad77136-ab93-459b-91a8-a1f3a9f77155" />
+</p>
+
+---
+ 
+## Gradients / Edge Detection
+ 
+Several methods exist for computing image gradients to detect edges.
+ 
+### 1. Laplacian
+ 
+A second-order derivative filter that highlights rapid intensity shifts. For an image function `f(x, y)`, the Laplacian **∇²f** sums the second-order partial derivatives in the horizontal (x) and vertical (y) directions:
+ 
+<p align="center">
+  <img width="335" height="110" alt="Laplacian formula" src="https://github.com/user-attachments/assets/c50db032-cdf6-44ee-9e8c-531d2c3ee172" />
+</p>
+
+```python
+cv.Laplacian(src_img, ddepth)
+```
+- `ddepth` — the desired bit-depth of the output image
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Laplacian output" src="https://github.com/user-attachments/assets/2f7673e7-b137-4502-a2a9-0412b8b4a8d3" />
+</p>
+
+> Since pixel values can't be negative, the code applies `np.uint8(np.absolute(lap))` to take the absolute value before casting to `uint8` (the standard image pixel datatype).
+ 
+<p align="center">
+  <img width="500" height="132" alt="uint8 absolute value note" src="https://github.com/user-attachments/assets/db483199-2e4c-478a-85d3-42e6fbebe920" />
+</p>
+
+### 2. Sobel
+ 
+Calculates the first-order derivative of image intensity using two `3×3` convolution kernels — one detects vertical edges (**Gx**), the other detects horizontal edges (**Gy**).
+ 
+**Horizontal gradient kernel (Gx):**
+ 
+<p align="center">
+  <img width="411" height="166" alt="Sobel Gx kernel" src="https://github.com/user-attachments/assets/a6b46aab-9691-4547-9ee0-74951f58b262" />
+</p>
+
+**Vertical gradient kernel (Gy):**
+ 
+<p align="center">
+  <img width="388" height="151" alt="Sobel Gy kernel" src="https://github.com/user-attachments/assets/83495c98-df87-4a3a-ba3f-77517c10b938" />
+</p>
+
+For an input image `I`, the gradient components at each pixel `(x, y)` come from convolving the image with each kernel:
+ 
+<p align="center">
+  <img width="215" height="126" alt="Sobel convolution formula" src="https://github.com/user-attachments/assets/38b6b9d9-3e5a-4b22-88c7-5dbb095c9ef1" />
+</p>
+
+Combining both directions gives the overall edge strength and orientation:
+ 
+**Gradient magnitude (G)** — the edge intensity at a pixel:
+ 
+<p align="center">
+  <img width="302" height="92" alt="Gradient magnitude formula" src="https://github.com/user-attachments/assets/cc6ff3fb-4842-483c-8343-7537fe73ca11" />
+</p>
+
+**Gradient direction (θ)** — the angle of the edge orientation:
+ 
+<p align="center">
+  <img width="332" height="109" alt="Gradient direction formula" src="https://github.com/user-attachments/assets/40c4aa1c-5195-4902-94e5-79561fe7c813" />
+</p>
+
+```python
+cv.Sobel(src_img, ddepth, dx, dy)
+```
+- `dx`, `dy` — direction flags; Sobel can compute the x- and y-direction gradients independently
+**Output — Sobel in the x-direction** (`dx=1, dy=0`):
+ 
+<p align="center">
+  <img width="500" height="500" alt="Sobel x-direction output" src="https://github.com/user-attachments/assets/19f892f9-d652-4e37-8bbb-e0159b218e2b" />
+</p>
+
+**Output — Sobel in the y-direction** (`dx=0, dy=1`):
+ 
+<p align="center">
+  <img width="500" height="500" alt="Sobel y-direction output" src="https://github.com/user-attachments/assets/d801162b-5e02-4b36-b2b4-5630f8e667ae" />
+</p>
+
+**Output — combined:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Sobel combined output" src="https://github.com/user-attachments/assets/c9c2eaf0-2a45-4291-a49e-f30bf4ffae43" />
+</p>
+
+### 3. Canny Edge Detection
+ 
+A multi-step algorithm that identifies object boundaries by detecting sharp intensity changes while minimizing noise.
+ 
+**The 5 stages of Canny edge detection:**
+ 
+| Stage | Description |
+|---|---|
+| 1. Gaussian filtering | Blurs the image to remove noise and prevent false edges |
+| 2. Gradient calculation | Computes intensity gradients (magnitude & direction) using operators like Sobel |
+| 3. Non-maximum suppression | Thins wide gradient ridges into sharp, one-pixel-wide boundaries |
+| 4. Double thresholding | Classifies pixels as strong, weak, or non-edges using two thresholds |
+| 5. Hysteresis tracking | Keeps weak edges only if they connect to strong edges, for continuous lines |
+ 
+```python
+cv.Canny(src_img, threshold1, threshold2)
+```
+- `threshold1`, `threshold2` — the lower and upper thresholds respectively
+**Output:**
+ 
+<p align="center">
+  <img width="500" height="500" alt="Canny edge detection output" src="https://github.com/user-attachments/assets/37d0de3f-8e13-4fa1-9b33-784e921c1dbd" />
+</p>
+
+---
+ 
+## Repo Structure
  
 ```
 .
@@ -460,6 +623,9 @@ cv.calcHist(list_images, channels, mask, histSize, range)
 ├── color.py            # Color spaces & channel splitting/merging
 ├── blurring.py         # Average, Gaussian, median & bilateral blurring
 ├── bitwise.py          # Bitwise AND / OR / NOT / XOR operations
-├── masking.py           # Region-of-interest masking
-└── histogram.py         # Grayscale & color histogram computation
+├── masking.py          # Region-of-interest masking
+├── histogram.py        # Grayscale & color histogram computation
+├── thresholding.py     # Simple & adaptive thresholding
+└── gradients.py        # Laplacian, Sobel & Canny edge detection
 ```
+ 
