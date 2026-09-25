@@ -1,4 +1,4 @@
-# 👁️ Computer Vision Techniques
+# Computer Vision Techniques
  
 A hands-on collection of OpenCV fundamentals — reading media, drawing shapes, core image-processing operations, geometric transformations, contour detection, color-space manipulation, blurring, bitwise operations, masking, and histogram computation — each demonstrated in its own script with visual output.
  
@@ -22,7 +22,7 @@ pip install opencv-contrib-python
  
 ---
  
-## 📑 Table of Contents
+## Table of Contents
  
 1. [Reading Media — `read.py`](#-reading-media--readpy)
 2. [Drawing Shapes — `draw.py`](#-drawing-shapes--drawpy)
