@@ -13,10 +13,10 @@ rectangle=cv.rectangle(blank,(img.shape[1]//2,img.shape[0]//2-200),(img.shape[1]
 # gray=cv.cvtColor(img,cv.COLOR_BGR2GRAY)
 # cv.imshow("Gray image",gray)
 
-masked_img=cv.bitwise_and(img,img,mask=rectangle)
-cv.imshow("Mask",masked_img)
+# masked_img=cv.bitwise_and(img,img,mask=rectangle)
+# cv.imshow("Mask",masked_img)
 
-# gray_hist=cv.calcHist([masked_img],[0],None,[256],[0,256])
+# gray_hist=cv.calcHist([gray],[0],None,[256],[0,256])
 # plt.figure()
 # plt.title('Grayscale Histogram')
 # plt.xlabel('Bins')
